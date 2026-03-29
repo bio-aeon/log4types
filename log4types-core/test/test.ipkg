@@ -1,0 +1,13 @@
+package log4types-core-test
+version = 0.1.0
+
+depends = base
+        , contrib
+        , log4types-core
+        , evince
+
+sourcedir = "src"
+
+main = Main
+
+executable = log4types-core-test

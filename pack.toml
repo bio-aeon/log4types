@@ -1,0 +1,32 @@
+[custom.all.log4types-core]
+type = "local"
+path = "log4types-core"
+ipkg = "log4types-core.ipkg"
+test = "test/test.ipkg"
+
+[custom.all.log4types-core-test]
+type = "local"
+path = "log4types-core/test"
+ipkg = "test.ipkg"
+
+[custom.all.log4types]
+type = "local"
+path = "log4types"
+ipkg = "log4types.ipkg"
+test = "test/test.ipkg"
+
+[custom.all.log4types-test]
+type = "local"
+path = "log4types/test"
+ipkg = "test.ipkg"
+
+[custom.all.log4types-json]
+type = "local"
+path = "log4types-json"
+ipkg = "log4types-json.ipkg"
+test = "test/test.ipkg"
+
+[custom.all.log4types-json-test]
+type = "local"
+path = "log4types-json/test"
+ipkg = "test.ipkg"

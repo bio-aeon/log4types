@@ -1,0 +1,13 @@
+package log4types-json
+version = 0.1.0
+authors = "log4types contributors"
+license = "MIT"
+brief   = "JSON backend for log4types structured logging."
+
+depends = base
+        , contrib
+        , log4types-core
+
+sourcedir = "src"
+
+modules = Log4Types.JSON
