@@ -11,3 +11,5 @@ sourcedir = "src"
 
 modules = Log4Types.Core
         , Log4Types.Core.Action
+        , Log4Types.Core.Severity
+        , Log4Types.Core.Value
