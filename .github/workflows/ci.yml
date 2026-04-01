@@ -1,0 +1,41 @@
+---
+name: Build
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+  pull_request:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Build ${{ github.repository }} with Idris2 latest
+    runs-on: ubuntu-latest
+    env:
+      PACK_DIR: /root/.pack
+    strategy:
+      fail-fast: false
+    container: ghcr.io/stefan-hoeck/idris2-pack:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build log4types-core
+        run: pack --no-prompt install log4types-core
+      - name: Test log4types-core
+        run: pack --no-prompt test log4types-core
+      - name: Build log4types
+        run: pack --no-prompt install log4types
+      - name: Test log4types
+        run: pack --no-prompt test log4types
+      - name: Build log4types-json
+        run: pack --no-prompt install log4types-json
+      - name: Test log4types-json
+        run: pack --no-prompt test log4types-json
