@@ -1,11 +1,12 @@
 module Main
 
 import Evince
-
-spec : Spec () ()
-spec = describe "Log4Types" $ do
-  it "placeholder" $
-    True `mustBe` True
+import Log4Types.FormatSpec
+import Log4Types.IOSpec
+import Log4Types.MessageSpec
 
 main : IO ()
-main = runSpec spec
+main = runSpec $ do
+  formatSpec
+  ioSpec
+  messageSpec
