@@ -3,7 +3,7 @@
 Composable logging, refined by dependent types.
 
 A structured logging library for Idris 2, inspired by Haskell's
-[co-log](https://github.com/co-log/co-log-core) architecture.
+[co-log](https://github.com/co-log/co-log) architecture.
 
 ## Packages
 

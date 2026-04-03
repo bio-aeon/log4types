@@ -5,5 +5,6 @@ module Log4Types
 
 import public Log4Types.Core
 import public Log4Types.Format
+import public Log4Types.HasLog
 import public Log4Types.IO
 import public Log4Types.Message
