@@ -4,14 +4,11 @@ import Data.IORef
 import Evince
 import Log4Types
 
-collectAction : IORef (List a) -> LogAction IO a
-collectAction ref = MkLogAction $ \msg => modifyIORef ref (msg ::)
-
 runCollecting : LoggerT String IO () -> IO (List String)
 runCollecting body = do
-  ref <- newIORef []
-  usingLoggerT (collectAction ref) body
-  map reverse (readIORef ref)
+  tl <- newTestLog
+  usingLoggerT (testLogAction tl) body
+  getMessages tl
 
 export
 hasLogSpec : Spec () ()
@@ -19,9 +16,10 @@ hasLogSpec = describe "HasLog" $ do
 
   describe "LogAction identity instance" $ do
     itIO "getLogAction returns self" $ do
-      ref <- newIORef (the (List String) [])
-      getLogAction (collectAction ref) <& "test"
-      msgs <- map reverse (readIORef ref)
+      tl <- newTestLog
+      let act : LogAction IO String = testLogAction tl
+      getLogAction act <& "test"
+      msgs <- getMessages tl
       pure $ msgs `mustEqual` ["test"]
 
   describe "logMsg" $ do
@@ -43,9 +41,9 @@ hasLogSpec = describe "HasLog" $ do
 
   describe "usingLoggerT" $ do
     itIO "lifts inner monad actions" $ do
-      ref <- newIORef (the (List String) [])
-      usingLoggerT (collectAction ref) $ do
-        lift (modifyIORef ref ("lifted" ::))
+      tl <- newTestLog
+      usingLoggerT (testLogAction tl) $ do
+        lift (modifyIORef tl.messages ("lifted" ::))
         logMsg "logged"
-      msgs <- map reverse (readIORef ref)
+      msgs <- getMessages tl
       pure $ msgs `mustEqual` ["lifted", "logged"]

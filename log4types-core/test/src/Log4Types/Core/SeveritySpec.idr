@@ -1,9 +1,10 @@
 module Log4Types.Core.SeveritySpec
 
-import Data.IORef
 import Evince
 import Log4Types.Core
-import Log4Types.Core.TestHelpers
+
+getSev : (Severity, String) -> Severity
+getSev (s, _) = s
 
 export
 severitySpec : Spec () ()
@@ -17,21 +18,17 @@ severitySpec = describe "Severity" $ do
 
   describe "filterBySeverity" $ do
     itIO "passes messages at or above threshold" $ do
-      ref <- newIORef []
-      let getSev : (Severity, String) -> Severity
-          getSev (s, _) = s
-      let filtered = filterBySeverity Warning getSev (collectAction ref)
+      tl <- newTestLog
+      let filtered = filterBySeverity Warning getSev (testLogAction tl)
       filtered <& (Warning, "warn-msg")
       filtered <& (Error, "err-msg")
-      msgs <- map reverse (readIORef ref)
+      msgs <- getMessages tl
       pure $ map snd msgs `mustEqual` ["warn-msg", "err-msg"]
 
     itIO "suppresses messages below threshold" $ do
-      ref <- newIORef []
-      let getSev : (Severity, String) -> Severity
-          getSev (s, _) = s
-      let filtered = filterBySeverity Warning getSev (collectAction ref)
+      tl <- newTestLog
+      let filtered = filterBySeverity Warning getSev (testLogAction tl)
       filtered <& (Debug, "debug-msg")
       filtered <& (Info, "info-msg")
-      msgs <- readIORef ref
+      msgs <- getMessages tl
       pure $ msgs `mustEqual` the (List (Severity, String)) []
