@@ -25,13 +25,13 @@ Eq Severity where
 
 public export
 Ord Severity where
-  compare x y = compare (toNat x) (toNat y)
+  compare x y = compare (toOrd x) (toOrd y)
     where
-      toNat : Severity -> Nat
-      toNat Debug   = 0
-      toNat Info    = 1
-      toNat Warning = 2
-      toNat Error   = 3
+      toOrd : Severity -> Integer
+      toOrd Debug   = 0
+      toOrd Info    = 1
+      toOrd Warning = 2
+      toOrd Error   = 3
 
 public export
 Show Severity where

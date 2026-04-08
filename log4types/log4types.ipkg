@@ -11,6 +11,7 @@ depends = base
 sourcedir = "src"
 
 modules = Log4Types
+        , Log4Types.Context
         , Log4Types.Format
         , Log4Types.HasLog
         , Log4Types.IO
