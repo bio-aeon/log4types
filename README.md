@@ -1,17 +1,37 @@
 # log4types
 
-Composable logging, refined by dependent types.
+*Composable logging, refined by dependent types.*
 
 A structured logging library for Idris 2, inspired by Haskell's
 [co-log](https://github.com/co-log/co-log) architecture.
 
-## Packages
+> **Note:** log4types is experimental. The API may change between versions.
 
-| Package | Description | Dependencies |
-|---------|-------------|--------------|
-| `log4types-core` | Core algebra: `LogAction`, combinators, severity, structured values | `base`, `contrib` |
-| `log4types` | Application logging: messages, IO actions, formatting, context | `log4types-core` |
-| `log4types-json` | JSON backend for structured log output | `log4types-core` |
+## Installation
+
+Add log4types as a dependency in your `pack.toml`:
+
+```toml
+[custom.all.log4types-core]
+type   = "github"
+url    = "https://github.com/bio-aeon/log4types"
+commit = "latest:main"
+ipkg   = "log4types-core/log4types-core.ipkg"
+
+[custom.all.log4types]
+type   = "github"
+url    = "https://github.com/bio-aeon/log4types"
+commit = "latest:main"
+ipkg   = "log4types/log4types.ipkg"
+```
+
+Then add `log4types` to your package's `depends`:
+
+```
+depends = log4types
+```
+
+For JSON support, also add `log4types-json` - see [JSON Output](docs/examples/json-output.md).
 
 ## Quick Start
 
@@ -24,10 +44,26 @@ main = do
   logger <& "Hello from log4types!"
 ```
 
-## Install
+## Packages
 
-Requires [idris2-pack](https://github.com/stefan-hoeck/idris2-pack).
+| Package | Description | Dependencies |
+|---------|-------------|--------------|
+| `log4types-core` | Core algebra: `LogAction`, combinators, severity, structured values | `base`, `contrib` |
+| `log4types` | Application logging: messages, IO actions, formatting, context | `log4types-core` |
+| `log4types-json` | JSON backend for structured log output | `log4types-core` |
 
-```sh
-pack install log4types
-```
+## Documentation
+
+| Topic | Description |
+|-------|-------------|
+| [Getting Started](docs/getting-started.md) | Installation and first logger |
+| [String Logging](docs/examples/string-logging.md) | Basic `LogAction` and `<&` operator |
+| [Structured Messages](docs/examples/structured-messages.md) | `Msg`, severity, and fields |
+| [Composing Loggers](docs/examples/composing-loggers.md) | Fan-out, `cmap`, `divide`, `choose` |
+| [LoggerT](docs/examples/loggert.md) | Reader-based logging with `logMsg` and `withLog` |
+| [Filtering](docs/examples/filtering.md) | Severity filtering, `cfilter`, `cmapMaybe` |
+| [Context](docs/examples/context.md) | Scoped structured context |
+| [Custom Loggable](docs/examples/custom-loggable.md) | Implementing `Loggable` for your types |
+| [Testing](docs/examples/testing.md) | In-memory `TestLog` for assertions |
+| [JSON Output](docs/examples/json-output.md) | JSON backend |
+| [Architecture](docs/architecture.md) | Package structure and core types |
