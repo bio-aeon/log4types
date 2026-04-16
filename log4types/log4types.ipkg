@@ -1,6 +1,6 @@
 package log4types
 version = 0.1.0
-authors = "log4types contributors"
+authors = "Alexandr Chigrinets"
 license = "MIT"
 brief   = "Composable structured logging for Idris 2 applications."
 

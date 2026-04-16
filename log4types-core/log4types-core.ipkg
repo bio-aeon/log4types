@@ -1,6 +1,6 @@
 package log4types-core
 version = 0.1.0
-authors = "log4types contributors"
+authors = "Alexandr Chigrinets"
 license = "MIT"
 brief   = "Core algebra for composable logging, refined by dependent types."
 

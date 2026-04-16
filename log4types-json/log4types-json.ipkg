@@ -1,6 +1,6 @@
 package log4types-json
 version = 0.1.0
-authors = "log4types contributors"
+authors = "Alexandr Chigrinets"
 license = "MIT"
 brief   = "JSON backend for log4types structured logging."
 

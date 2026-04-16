@@ -1,5 +1,7 @@
 package log4types-core-test
 version = 0.1.0
+authors = "Alexandr Chigrinets"
+license = "MIT"
 
 depends = base
         , contrib
