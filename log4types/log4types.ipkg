@@ -2,7 +2,7 @@ package log4types
 version = 0.1.0
 authors = "Alexandr Chigrinets"
 license = "MIT"
-brief   = "Composable structured logging for Idris 2 applications."
+brief   = "Composable structured logging for Idris 2 applications"
 
 depends = base
         , contrib

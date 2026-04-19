@@ -2,36 +2,17 @@
 
 ## Installation
 
-Add log4types as a dependency in your `pack.toml`:
-
-```toml
-[custom.all.log4types-core]
-type   = "github"
-url    = "https://github.com/bio-aeon/log4types"
-commit = "latest:main"
-ipkg   = "log4types-core/log4types-core.ipkg"
-
-[custom.all.log4types]
-type   = "github"
-url    = "https://github.com/bio-aeon/log4types"
-commit = "latest:main"
-ipkg   = "log4types/log4types.ipkg"
-```
-
-Then add `log4types` to your package's `depends`:
+log4types is available in the [pack](https://github.com/stefan-hoeck/idris2-pack)
+package collection. Add `log4types` to your package's `depends`:
 
 ```
 depends = log4types
 ```
 
-For JSON support, also add `log4types-json`:
+For JSON support, add `log4types-json` too:
 
-```toml
-[custom.all.log4types-json]
-type   = "github"
-url    = "https://github.com/bio-aeon/log4types"
-commit = "latest:main"
-ipkg   = "log4types-json/log4types-json.ipkg"
+```
+depends = log4types, log4types-json
 ```
 
 ## Your First Logger

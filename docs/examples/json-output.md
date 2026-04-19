@@ -41,17 +41,8 @@ encodeLoggableStr : Loggable a => a -> String   -- as JSON string
 
 ## Installation
 
-Add `log4types-json` to your `pack.toml`:
-
-```toml
-[custom.all.log4types-json]
-type   = "github"
-url    = "https://github.com/bio-aeon/log4types"
-commit = "latest:main"
-ipkg   = "log4types-json/log4types-json.ipkg"
-```
-
-And to your package's `depends`:
+`log4types-json` is available in the [pack](https://github.com/stefan-hoeck/idris2-pack)
+package collection. Add it to your package's `depends`:
 
 ```
 depends = log4types-json
