@@ -3,6 +3,7 @@
 ||| Re-exports all log4types modules.
 module Log4Types
 
+import public Log4Types.ANSI
 import public Log4Types.Context
 import public Log4Types.Core
 import public Log4Types.File

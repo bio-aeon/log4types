@@ -1,5 +1,5 @@
 package log4types
-version = 0.1.0
+version = 0.2.0
 authors = "Alexandr Chigrinets"
 license = "MIT"
 brief   = "Composable structured logging for Idris 2 applications"
@@ -11,6 +11,7 @@ depends = base
 sourcedir = "src"
 
 modules = Log4Types
+        , Log4Types.ANSI
         , Log4Types.Context
         , Log4Types.File
         , Log4Types.Format
