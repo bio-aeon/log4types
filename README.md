@@ -51,4 +51,5 @@ main = do
 | [Custom Loggable](docs/examples/custom-loggable.md) | Implementing `Loggable` for your types |
 | [Testing](docs/examples/testing.md) | In-memory `TestLog` for assertions |
 | [JSON Output](docs/examples/json-output.md) | JSON backend |
+| [File Rotation](docs/examples/file-rotation.md) | Size-based rotation with `withRotatingLogFile` |
 | [Architecture](docs/architecture.md) | Package structure and core types |

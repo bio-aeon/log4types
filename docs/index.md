@@ -23,3 +23,4 @@ Composable logging, refined by dependent types.
 | [Custom Loggable](examples/custom-loggable.md) | Implementing `Loggable` for your own types |
 | [Testing](examples/testing.md) | In-memory `TestLog` for test assertions |
 | [JSON Output](examples/json-output.md) | JSON backend with `jsonLogStdout` |
+| [File Rotation](examples/file-rotation.md) | Size-based rotation with `withRotatingLogFile` |
