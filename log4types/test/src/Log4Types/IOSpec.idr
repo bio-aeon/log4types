@@ -5,7 +5,7 @@ import Evince
 import Log4Types
 
 export
-ioSpec : Spec () ()
+ioSpec : HasIO m => Spec m () ()
 ioSpec = describe "IO actions" $ do
 
   describe "logStringStdout" $ do

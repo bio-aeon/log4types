@@ -11,7 +11,7 @@ cleanup : IO ()
 cleanup = ignore $ removeFile tmpFile
 
 export
-fileSpec : Spec () ()
+fileSpec : HasIO m => Spec m () ()
 fileSpec = describe "File" $ do
 
   describe "logStringHandle" $ do

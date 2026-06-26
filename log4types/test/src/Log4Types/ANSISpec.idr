@@ -8,7 +8,7 @@ esc : String
 esc = "\ESC"
 
 export
-ansiSpec : Spec () ()
+ansiSpec : Applicative m => Spec m () ()
 ansiSpec = describe "ANSI" $ do
 
   describe "fmtColouredSeverity" $ do

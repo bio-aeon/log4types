@@ -4,7 +4,7 @@ import Evince
 import Log4Types
 
 export
-formatSpec : Spec () ()
+formatSpec : Applicative m => Spec m () ()
 formatSpec = describe "Format" $ do
 
   describe "fmtSeverity" $ do

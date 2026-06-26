@@ -6,7 +6,7 @@ import Log4Types.Core
 import Log4Types.JSON
 
 export
-jsonSpec : Spec () ()
+jsonSpec : Applicative m => Spec m () ()
 jsonSpec = describe "JSON" $ do
 
   describe "jsonRenderer" $ do

@@ -4,7 +4,7 @@ import Evince
 import Log4Types.Core
 
 export
-valueSpec : Spec () ()
+valueSpec : Applicative m => Spec m () ()
 valueSpec = describe "LogParamValue" $ do
   it "StrVal shows quoted" (show (StrVal "hello") `mustEqual` "\"hello\"")
   it "IntVal shows number" (show (IntVal 42) `mustEqual` "42")

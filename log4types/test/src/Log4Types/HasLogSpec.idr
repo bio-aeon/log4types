@@ -11,7 +11,7 @@ runCollecting body = do
   getMessages tl
 
 export
-hasLogSpec : Spec () ()
+hasLogSpec : HasIO m => Spec m () ()
 hasLogSpec = describe "HasLog" $ do
 
   describe "LogAction identity instance" $ do

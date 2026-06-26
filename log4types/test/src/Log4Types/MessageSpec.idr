@@ -4,7 +4,7 @@ import Evince
 import Log4Types
 
 export
-messageSpec : Spec () ()
+messageSpec : Applicative m => Spec m () ()
 messageSpec = describe "Message" $ do
 
   describe "mkDebug" $ do

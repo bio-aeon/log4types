@@ -22,7 +22,7 @@ tenChars : String
 tenChars = "xxxxxxxxxx"
 
 export
-fileRotationSpec : Spec () ()
+fileRotationSpec : HasIO m => Spec m () ()
 fileRotationSpec = describe "File Rotation" $ do
 
   describe "RotationConfig" $ do

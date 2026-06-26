@@ -13,7 +13,7 @@ testRenderer = MkLogRenderer
   }
 
 export
-loggableSpec : Spec () ()
+loggableSpec : Applicative m => Spec m () ()
 loggableSpec = describe "Loggable" $ do
 
   describe "String instance" $ do

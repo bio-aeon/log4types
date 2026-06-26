@@ -4,7 +4,7 @@ import Evince
 import Log4Types
 
 export
-contextSpec : Spec () ()
+contextSpec : HasIO m => Spec m () ()
 contextSpec = describe "Context" $ do
 
   describe "addField" $ do

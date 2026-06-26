@@ -7,7 +7,7 @@ getSev : (Severity, String) -> Severity
 getSev (s, _) = s
 
 export
-severitySpec : Spec () ()
+severitySpec : HasIO m => Spec m () ()
 severitySpec = describe "Severity" $ do
   describe "ordering" $ do
     it "Debug < Info" (mustBeTrue $ Debug < Info)

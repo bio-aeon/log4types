@@ -6,7 +6,7 @@ import Evince
 import Log4Types.Core
 
 export
-actionSpec : Spec () ()
+actionSpec : HasIO m => Spec m () ()
 actionSpec = describe "LogAction" $ do
 
   describe "execution" $ do
