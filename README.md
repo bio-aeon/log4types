@@ -5,7 +5,8 @@
 A structured logging library for Idris 2, inspired by Haskell's
 [co-log](https://github.com/co-log/co-log) architecture.
 
-> **Note:** log4types is experimental. The API may change between versions.
+> **Note:** log4types is experimental. The API may change between versions - see the
+> [changelog](CHANGELOG.md).
 
 ## Installation
 
@@ -29,6 +30,9 @@ main = do
   logger <& "Hello from log4types!"
 ```
 
+`LogAction` is the core type - a first-class value that consumes messages.
+The `<&` operator executes a log action on a message.
+
 ## Packages
 
 | Package | Description | Dependencies |
@@ -41,15 +45,15 @@ main = do
 
 | Topic | Description |
 |-------|-------------|
-| [Getting Started](docs/getting-started.md) | Installation and first logger |
 | [String Logging](docs/examples/string-logging.md) | Basic `LogAction` and `<&` operator |
 | [Structured Messages](docs/examples/structured-messages.md) | `Msg`, severity, and fields |
-| [Composing Loggers](docs/examples/composing-loggers.md) | Fan-out, `cmap`, `divide`, `choose` |
+| [Composing Loggers](docs/examples/composing-loggers.md) | Fan-out (`<+>`), `cmap`, `divide`, `choose` |
 | [LoggerT](docs/examples/loggert.md) | Reader-based logging with `logMsg` and `withLog` |
-| [Filtering](docs/examples/filtering.md) | Severity filtering, `cfilter`, `cmapMaybe` |
-| [Context](docs/examples/context.md) | Scoped structured context |
+| [Filtering](docs/examples/filtering.md) | Severity filtering with `filterBySeverity`, `cfilter`, `cmapMaybe` |
+| [Context](docs/examples/context.md) | Scoped structured context with `withContext` |
 | [Custom Loggable](docs/examples/custom-loggable.md) | Implementing `Loggable` for your types |
 | [Testing](docs/examples/testing.md) | In-memory `TestLog` for assertions |
-| [JSON Output](docs/examples/json-output.md) | JSON backend |
+| [JSON Output](docs/examples/json-output.md) | JSON backend with `jsonLogStdout` |
 | [File Rotation](docs/examples/file-rotation.md) | Size-based rotation with `withRotatingLogFile` |
+| [Backends](docs/backends.md) | Supported code generators and per-backend notes |
 | [Architecture](docs/architecture.md) | Package structure and core types |

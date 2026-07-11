@@ -42,7 +42,7 @@ jsonSpec = describe "JSON" $ do
       encodeLoggableStr "test" `mustEqual` "{\"value\":\"test\"}"
 
     it "integers remain numeric (not quoted)" $
-      encodeLoggableStr (the Int 99) `mustEqual` "{\"value\":99.0}"
+      parse (encodeLoggableStr 99) `mustEqual` Just (JObject [("value", JNumber 99.0)])
 
     it "booleans remain boolean" $
       encodeLoggableStr True `mustEqual` "{\"value\":true}"
