@@ -1,0 +1,13 @@
+package log4types-async
+version = 0.5.0
+authors = "Alexandr Chigrinets"
+license = "MIT"
+brief   = "Asynchronous background-fiber logging for log4types"
+
+depends = base
+        , log4types-core
+        , async
+
+sourcedir = "src"
+
+modules = Log4Types.Async

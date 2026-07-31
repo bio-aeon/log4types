@@ -40,6 +40,7 @@ The `<&` operator executes a log action on a message.
 | `log4types-core` | Core algebra: `LogAction`, combinators, severity, structured values | `base`, `contrib` |
 | `log4types` | Application logging: messages, IO actions, formatting, context | `log4types-core` |
 | `log4types-json` | JSON backend for structured log output | `log4types-core` |
+| `log4types-async` | Asynchronous background-fiber logging | `log4types-core`, `async` |
 
 ## Documentation
 
@@ -55,5 +56,6 @@ The `<&` operator executes a log action on a message.
 | [Testing](docs/examples/testing.md) | In-memory `TestLog` for assertions |
 | [JSON Output](docs/examples/json-output.md) | JSON backend with `jsonLogStdout` |
 | [File Rotation](docs/examples/file-rotation.md) | Size-based rotation with `withRotatingLogFile` |
+| [Async Logging](docs/examples/async-logging.md) | Background-fiber logging with `withAsyncLogger` |
 | [Backends](docs/backends.md) | Supported code generators and per-backend notes |
 | [Architecture](docs/architecture.md) | Package structure and core types |

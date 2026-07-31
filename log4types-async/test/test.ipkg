@@ -1,0 +1,17 @@
+package log4types-async-test
+version = 0.1.0
+authors = "Alexandr Chigrinets"
+license = "MIT"
+
+depends = base
+        , contrib
+        , log4types-core
+        , log4types-async
+        , async
+        , evince
+
+sourcedir = "src"
+
+main = Main
+
+executable = log4types-async-test

@@ -23,6 +23,10 @@ log4types                  (depends on log4types-core)
 log4types-json             (depends on log4types-core)
   jsonRenderer             - LogRenderer building JSON objects
   jsonLogStdout            - JSON log action
+
+log4types-async            (depends on log4types-core, async)
+  AsyncConfig              - buffer capacity for the worker
+  withAsyncLogger          - channel-buffered LogAction drained by a fiber
 ```
 
 ## Layers
@@ -43,6 +47,11 @@ logging.
 log actions. The JSON backend uses `Language.JSON` from `contrib` to produce
 JSON objects that preserve type fidelity (numbers stay numeric, booleans stay
 boolean).
+
+**Execution wrappers** (`log4types-async`): Orthogonal to the layers above -
+`withAsyncLogger` adapts any `LogAction IO msg` into a channel-buffered
+`LogAction (Async e []) msg` drained by a background fiber, generic over the
+idris2-async event loop the application runs.
 
 ## Core Types
 

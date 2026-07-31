@@ -6,6 +6,10 @@ generators. The library contains a single `%foreign` declaration (the
 everything else is pure Idris plus `base` primitives. `chez-sep` and incremental compilation are build variants of the
 Chez runtime and need no separate support.
 
+The optional `log4types-async` package (built on idris2-async) runs on
+`chez`, `racket`, and `node`; it is not available on `refc`, whose backend
+idris2-async's internals do not support.
+
 ## Selecting a backend
 
 With [pack](https://github.com/stefan-hoeck/idris2-pack), pass the code

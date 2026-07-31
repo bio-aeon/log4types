@@ -1,7 +1,7 @@
 # Changelog
 
 All notable changes to the log4types package family (`log4types-core`,
-`log4types`, `log4types-json`) are documented here.
+`log4types`, `log4types-json`, `log4types-async`) are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -9,6 +9,19 @@ While pre-1.0, breaking changes may land in minor releases - they are marked
 **Breaking** below.
 
 ## [Unreleased]
+
+## [0.5.0] - 2026-07-31
+
+Asynchronous logging: a new `log4types-async` package moves backend I/O off
+the application's critical path.
+
+### Added
+
+- **`log4types-async`** - `withAsyncLogger` adapts any `LogAction IO msg`
+  into a channel-buffered `LogAction (Async e [])` drained by a background
+  fiber, generic over the idris2-async event loop; blocking backpressure
+  via `AsyncConfig`, and every enqueued message is flushed on scope exit.
+  Runs on `chez`, `racket`, and `node`; not available on `refc`.
 
 ## [0.4.0] - 2026-07-11
 

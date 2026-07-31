@@ -30,3 +30,19 @@ test = "test/test.ipkg"
 type = "local"
 path = "log4types-json/test"
 ipkg = "test.ipkg"
+
+[custom.all.log4types-async]
+type = "local"
+path = "log4types-async"
+ipkg = "log4types-async.ipkg"
+test = "test/test.ipkg"
+
+[custom.all.log4types-async-test]
+type = "local"
+path = "log4types-async/test"
+ipkg = "test.ipkg"
+
+[custom.all.log4types-async-test-js]
+type = "local"
+path = "log4types-async/test-js"
+ipkg = "test.ipkg"

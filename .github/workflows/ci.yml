@@ -49,3 +49,12 @@ jobs:
         # upstream idris2 refc bug: casts from String miscompile (JSON.parse triggers this)
         if: matrix.cg != 'refc'
         run: pack --no-prompt --cg ${{ matrix.cg }} test log4types-json
+      - name: Build log4types-async
+        run: pack --no-prompt --cg ${{ matrix.cg }} install log4types-async
+      - name: Test log4types-async
+        # idris2-async's channel internals have no refc backend; node runs the JS suite below
+        if: matrix.cg == 'chez' || matrix.cg == 'racket'
+        run: pack --no-prompt --cg ${{ matrix.cg }} test log4types-async
+      - name: Test log4types-async (JS event loop)
+        if: matrix.cg == 'node'
+        run: pack --no-prompt --cg node run log4types-async-test-js
