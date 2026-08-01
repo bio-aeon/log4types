@@ -9,7 +9,9 @@ main : IO ()
 main = do
   let logger = cmap show logStringStdout
   logger <& mkInfo "server started"
+  -- Output: [INFO] server started
   logger <& MkMsg Warning "disk usage high" [("percent", IntVal 92)]
+  -- Output: [WARNING] disk usage high percent=92
 ```
 
 ## Message Types

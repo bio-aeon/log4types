@@ -39,6 +39,8 @@ encodeLoggableStr : Loggable a => a -> String   -- as JSON string
 | `BoolVal b` | `JBoolean b` |
 | `NullVal` | `JNull` |
 
+JSON numbers are `Double`-backed, so `IntVal 30` renders as `30.0` on the Scheme backends and `30` on node - see [Backends](../backends.md).
+
 ## Installation
 
 `log4types-json` is available in the [pack](https://github.com/stefan-hoeck/idris2-pack)

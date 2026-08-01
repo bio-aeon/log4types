@@ -10,7 +10,7 @@ main = do
   let ctx = addStr "service" "api" $ addInt "port" 8080 emptyContext
   let logger = withContext ctx (cmap show logStringStdout)
   logger <& mkInfo "ready"
-  -- fields include: service="api", port=8080
+  -- Output: [INFO] ready port=8080 service="api"
 ```
 
 ## Building Context
@@ -33,7 +33,7 @@ let outer = addStr "service" "api" emptyContext
 let inner = addInt "requestId" 123 outer
 let logger = withContext inner (cmap show logStringStdout)
 logger <& mkInfo "handling request"
--- fields: service="api", requestId=123
+-- Output: [INFO] handling request service="api" requestId=123
 ```
 
 ## How withContext Works

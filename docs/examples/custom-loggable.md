@@ -17,6 +17,18 @@ Loggable User where
   logShow u = u.name ++ " (age " ++ show u.age ++ ")"
 ```
 
+`logFields` drives structured backends, `logShow` drives text output:
+
+```idris
+jsonLogStdout <& MkUser "alice" 30
+-- Output: {"age":30.0,"name":"alice"}
+
+cmap logShow logStringStdout <& MkUser "alice" 30
+-- Output: alice (age 30)
+```
+
+Fields are appended, so the innermost `addField` comes first - `age` before `name` here.
+
 ## The Loggable Interface
 
 ```idris

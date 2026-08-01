@@ -14,6 +14,10 @@ app = do
 
 main : IO ()
 main = usingLoggerT logStringStdout app
+
+-- Output: starting
+--         app: inner message
+--         done
 ```
 
 ## Key Functions
