@@ -10,6 +10,10 @@ While pre-1.0, breaking changes may land in minor releases - they are marked
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-10-12
+
+No library changes: the test suites now run on evince 0.9.
+
 ## [0.5.0] - 2026-07-31
 
 Asynchronous logging: a new `log4types-async` package moves backend I/O off

@@ -17,18 +17,18 @@ severitySpec = describe "Severity" $ do
     it "Error is the maximum" (mustBeTrue $ Error >= Debug && Error >= Info && Error >= Warning)
 
   describe "filterBySeverity" $ do
-    itIO "passes messages at or above threshold" $ do
+    it "passes messages at or above threshold" $ do
       tl <- newTestLog
       let filtered = filterBySeverity Warning getSev (testLogAction tl)
       filtered <& (Warning, "warn-msg")
       filtered <& (Error, "err-msg")
       msgs <- getMessages tl
-      pure $ map snd msgs `mustEqual` ["warn-msg", "err-msg"]
+      map snd msgs `mustEqual` ["warn-msg", "err-msg"]
 
-    itIO "suppresses messages below threshold" $ do
+    it "suppresses messages below threshold" $ do
       tl <- newTestLog
       let filtered = filterBySeverity Warning getSev (testLogAction tl)
       filtered <& (Debug, "debug-msg")
       filtered <& (Info, "info-msg")
       msgs <- getMessages tl
-      pure $ msgs `mustEqual` the (List (Severity, String)) []
+      msgs `mustEqual` []

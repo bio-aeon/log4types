@@ -16,42 +16,42 @@ contextSpec = describe "Context" $ do
       in ctx `mustEqual` [("a", IntVal 1), ("b", IntVal 2)]
 
   describe "convenience builders" $ do
-    it "addStr adds a string field" $
+    it "adds a string field" $
       addStr "name" "alice" [] `mustEqual` [("name", StrVal "alice")]
 
-    it "addInt adds an integer field" $
+    it "adds an integer field" $
       addInt "count" 42 [] `mustEqual` [("count", IntVal 42)]
 
-    it "addBool adds a boolean field" $
+    it "adds a boolean field" $
       addBool "active" True [] `mustEqual` [("active", BoolVal True)]
 
-    it "addNamespace adds a namespace field" $
+    it "adds a namespace field" $
       addNamespace "auth" [] `mustEqual` [("namespace", StrVal "auth")]
 
   describe "withContext" $ do
-    itIO "enriches messages with context fields" $ do
+    it "enriches messages with context fields" $ do
       tl <- newTestLog
       let ctx = addStr "env" "prod" emptyContext
       let act = withContext ctx (testLogAction tl)
       act <& mkInfo "hello"
       msgs <- getMessages tl
-      pure $ map fields msgs `mustEqual` [[("env", StrVal "prod")]]
+      map fields msgs `mustEqual` [[("env", StrVal "prod")]]
 
-    itIO "nesting includes outer fields" $ do
+    it "nesting includes outer fields" $ do
       tl <- newTestLog
       let outer = addStr "service" "api" emptyContext
       let inner = addInt "requestId" 123 outer
       let act = withContext inner (testLogAction tl)
       act <& mkInfo "request"
       msgs <- getMessages tl
-      pure $ map fields msgs `mustEqual`
+      map fields msgs `mustEqual`
         [[("service", StrVal "api"), ("requestId", IntVal 123)]]
 
-    itIO "preserves message's own fields" $ do
+    it "preserves message's own fields" $ do
       tl <- newTestLog
       let ctx = addStr "env" "prod" emptyContext
       let act = withContext ctx (testLogAction tl)
       act <& MkMsg Info "hello" [("status", IntVal 200)]
       msgs <- getMessages tl
-      pure $ map fields msgs `mustEqual`
+      map fields msgs `mustEqual`
         [[("env", StrVal "prod"), ("status", IntVal 200)]]

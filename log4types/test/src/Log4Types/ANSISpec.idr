@@ -67,8 +67,7 @@ ansiSpec = describe "ANSI" $ do
           && isInfixOf esc (fmtColouredMsg m)
 
     it "includes message text" $
-      let m = mkWarning "disk low"
-      in mustBeTrue $ isInfixOf "disk low" (fmtColouredMsg m)
+      mustBeTrue $ isInfixOf "disk low" (fmtColouredMsg (mkWarning "disk low"))
 
     it "includes structured fields" $
       let m = MkMsg Info "request" [("status", IntVal 200)]

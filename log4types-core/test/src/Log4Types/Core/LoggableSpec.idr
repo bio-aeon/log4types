@@ -19,29 +19,24 @@ loggableSpec = describe "Loggable" $ do
   describe "String instance" $ do
     it "logShow returns the string" (logShow "hello" `mustEqual` "hello")
     it "logFields adds a StrVal field" $
-      let fields = logFields testRenderer "hello" []
-      in fields `mustEqual` [("value", StrVal "hello")]
+      logFields testRenderer "hello" [] `mustEqual` [("value", StrVal "hello")]
 
   describe "Int instance" $ do
     it "logShow returns the number" (logShow (the Int 42) `mustEqual` "42")
     it "logFields adds an IntVal field" $
-      let fields = logFields testRenderer (the Int 42) []
-      in fields `mustEqual` [("value", IntVal 42)]
+      logFields testRenderer (the Int 42) [] `mustEqual` [("value", IntVal 42)]
 
   describe "Bool instance" $ do
     it "logShow returns the boolean" (logShow True `mustEqual` "True")
     it "logFields adds a BoolVal field" $
-      let fields = logFields testRenderer True []
-      in fields `mustEqual` [("value", BoolVal True)]
+      logFields testRenderer True [] `mustEqual` [("value", BoolVal True)]
 
   describe "Maybe instance" $ do
     it "logFields is noop for Nothing" $
-      let fields = logFields testRenderer (the (Maybe Int) Nothing) []
-      in fields `mustEqual` the (List (String, LogParamValue)) []
+      logFields testRenderer (the (Maybe Int) Nothing) [] `mustEqual` []
 
     it "logFields delegates for Just" $
-      let fields = logFields testRenderer (Just (the Int 7)) []
-      in fields `mustEqual` [("value", IntVal 7)]
+      logFields testRenderer (Just (the Int 7)) [] `mustEqual` [("value", IntVal 7)]
 
     it "logShow shows Nothing" (logShow (the (Maybe Int) Nothing) `mustEqual` "Nothing")
     it "logShow delegates for Just" (logShow (Just (the Int 7)) `mustEqual` "7")
@@ -52,8 +47,7 @@ loggableSpec = describe "Loggable" $ do
 
   describe "LoggedValue" $ do
     it "preserves Loggable evidence through existential" $
-      let lv = MkLoggedValue (the Int 42)
-      in show lv `mustEqual` "42"
+      show (MkLoggedValue (the Int 42)) `mustEqual` "42"
 
     it "loggedValueFields delegates to wrapped value" $
       let lv = MkLoggedValue "test"

@@ -4,7 +4,7 @@ import Data.IORef
 import Evince
 import Log4Types
 
-runCollecting : LoggerT String IO () -> IO (List String)
+runCollecting : HasIO io => LoggerT String io () -> io (List String)
 runCollecting body = do
   tl <- newTestLog
   usingLoggerT (testLogAction tl) body
@@ -15,35 +15,35 @@ hasLogSpec : HasIO m => Spec m () ()
 hasLogSpec = describe "HasLog" $ do
 
   describe "LogAction identity instance" $ do
-    itIO "getLogAction returns self" $ do
+    it "yields the action itself as the logger" $ do
       tl <- newTestLog
       let act : LogAction IO String = testLogAction tl
-      getLogAction act <& "test"
+      liftIO $ getLogAction act <& "test"
       msgs <- getMessages tl
-      pure $ msgs `mustEqual` ["test"]
+      msgs `mustEqual` ["test"]
 
   describe "logMsg" $ do
-    itIO "extracts action from environment and applies" $ do
+    it "extracts action from environment and applies" $ do
       msgs <- runCollecting $ logMsg "hello"
-      pure $ msgs `mustEqual` ["hello"]
+      msgs `mustEqual` ["hello"]
 
-    itIO "sequences multiple log messages" $ do
+    it "sequences multiple log messages" $ do
       msgs <- runCollecting $ do logMsg "first"; logMsg "second"
-      pure $ msgs `mustEqual` ["first", "second"]
+      msgs `mustEqual` ["first", "second"]
 
   describe "withLog" $ do
-    itIO "temporarily modifies the logger" $ do
+    it "temporarily modifies the logger" $ do
       msgs <- runCollecting $ do
         logMsg "before"
         withLog (cmap ("PREFIX: " ++)) (logMsg "inner")
         logMsg "after"
-      pure $ msgs `mustEqual` ["before", "PREFIX: inner", "after"]
+      msgs `mustEqual` ["before", "PREFIX: inner", "after"]
 
   describe "usingLoggerT" $ do
-    itIO "lifts inner monad actions" $ do
+    it "lifts inner monad actions" $ do
       tl <- newTestLog
       usingLoggerT (testLogAction tl) $ do
         lift (modifyIORef tl.messages ("lifted" ::))
         logMsg "logged"
       msgs <- getMessages tl
-      pure $ msgs `mustEqual` ["lifted", "logged"]
+      msgs `mustEqual` ["lifted", "logged"]
