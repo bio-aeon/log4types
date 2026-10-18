@@ -1,5 +1,5 @@
 package log4types-async
-version = 0.5.1
+version = 0.6.0
 authors = "Alexandr Chigrinets"
 license = "MIT"
 brief   = "Asynchronous background-fiber logging for log4types"

@@ -11,6 +11,7 @@ log4types-core             (depends only on base, contrib)
   Severity                 - Debug | Info | Warning | Error
   LogParamValue            - typed primitives (StrVal, IntVal, ...)
   Loggable, LogRenderer    - structured value rendering
+  Masked, Hidden           - masking sensitive fields
   TestLog                  - in-memory logger for testing
 
 log4types                  (depends on log4types-core)
@@ -63,6 +64,7 @@ idris2-async event loop the application runs.
 | `Loggable a` | Interface describing how a type renders to structured log fields. |
 | `LogRenderer r` | Record describing how to build structured output of type `r`. |
 | `LoggedValue` | Existential wrapper packaging a value with its `Loggable` evidence. |
+| `Masked a`, `Hidden a` | Wrappers that log a value as `***`, or leave it out. |
 | `Msg` | Structured message with severity, text, and key-value fields. |
 | `LoggerT msg m` | Monad transformer carrying a `LogAction` in a reader environment. |
 | `Context` | A list of named `LogParamValue` fields for enriching messages. |

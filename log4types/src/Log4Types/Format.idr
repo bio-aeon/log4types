@@ -1,30 +1,35 @@
 ||| Human-readable text formatting for log output.
 module Log4Types.Format
 
+import Data.String
 import Log4Types.Core
 
 %default total
 
-||| A LogRenderer that builds key=value text output.
+||| A LogRenderer that flattens a value into a list of fields.
 |||
-||| Fields are rendered as `key=value` pairs separated by spaces.
-||| Nested objects are rendered as `key.subkey=value`.
+||| Fields keep the order they are added in, and every field of a nested
+||| object carries the object's name as a dotted prefix, as in
+||| `customer.address.city`. The list has the shape of `Msg.fields`;
+||| `fmtFields` renders it as text.
 public export
-textRenderer : LogRenderer String
-textRenderer = MkLogRenderer
-  { addField  = \name, val, acc =>
-      let field = name ++ "=" ++ show val
-      in if acc == "" then field else acc ++ " " ++ field
+fieldsRenderer : LogRenderer (List (String, LogParamValue))
+fieldsRenderer = MkLogRenderer
+  { addField  = \name, val, acc => acc ++ [(name, val)]
   , addNested = \name, build, acc =>
-      let nested = build ""
-          prefixed = name ++ "." ++ nested
-      in if acc == "" then prefixed else acc ++ " " ++ prefixed
-  , empty     = ""
-  , combine   = \a, b =>
-      if a == "" then b
-      else if b == "" then a
-      else a ++ " " ++ b
+      acc ++ map (\(k, v) => (name ++ "." ++ k, v)) (build [])
+  , empty     = []
+  , combine   = (++)
   }
+
+||| Render fields as space-separated `key=value` pairs.
+|||
+||| ```idris
+||| fmtFields [("user", StrVal "alice"), ("attempt", IntVal 2)] == "user=\"alice\" attempt=2"
+||| ```
+public export
+fmtFields : List (String, LogParamValue) -> String
+fmtFields = unwords . map (\(k, v) => k ++ "=" ++ show v)
 
 ||| Format a severity level as a bracketed tag.
 |||

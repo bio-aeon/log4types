@@ -44,34 +44,22 @@ ansiSpec = describe "ANSI" $ do
     it "uses Red for Error" $
       mustBeTrue $ isInfixOf "38;5;1" (fmtColouredSeverity Error)
 
-  describe "colouredTextRenderer" $ do
-    it "colours severity when field name is \"severity\"" $
-      let r = colouredTextRenderer.addField "severity" (StrVal "Error") colouredTextRenderer.empty
-      in mustBeTrue $ isInfixOf "[ERROR]" r && isInfixOf esc r
+  describe "fmtColouredFields" $ do
+    it "renders each severity as its coloured tag" $
+      let severities = [Debug, Info, Warning, Error]
+      in fmtColouredFields (map (\s => ("severity", StrVal (show s))) severities)
+           `mustEqual` unwords (map fmtColouredSeverity severities)
 
-    it "renders non-severity fields as plain key=value" $
-      let r = colouredTextRenderer.addField "count" (IntVal 42) colouredTextRenderer.empty
-      in r `mustEqual` "count=42"
+    it "keeps other fields plain and in order" $
+      fmtColouredFields [("count", IntVal 42), ("severity", StrVal "Info")]
+        `mustEqual` ("count=42 " ++ fmtColouredSeverity Info)
 
-    it "interleaves coloured severity with plain fields" $
-      let r = colouredTextRenderer.addField "count" (IntVal 42) $
-              colouredTextRenderer.addField "severity" (StrVal "Info") colouredTextRenderer.empty
-      in mustBeTrue $ isInfixOf "[INFO]" r
-          && isInfixOf "count=42" r
-          && isInfixOf esc r
+    it "renders an unknown severity as a plain field" $
+      fmtColouredFields [("severity", StrVal "Trace")] `mustEqual` "severity=\"Trace\""
 
   describe "fmtColouredMsg" $ do
-    it "includes coloured severity tag" $
-      let m = mkInfo "ready"
-      in mustBeTrue $ isInfixOf "[INFO]" (fmtColouredMsg m)
-          && isInfixOf esc (fmtColouredMsg m)
-
-    it "includes message text" $
-      mustBeTrue $ isInfixOf "disk low" (fmtColouredMsg (mkWarning "disk low"))
-
-    it "includes structured fields" $
-      let m = MkMsg Info "request" [("status", IntVal 200)]
-      in mustBeTrue $ isInfixOf "status=200" (fmtColouredMsg m)
+    it "renders its severity as a coloured tag" $
+      fmtColouredMsg (mkWarning "disk low") `mustEqual` (fmtColouredSeverity Warning ++ " disk low")
 
   describe "fmtMsgForTTY" $ do
     it "emits coloured output when TTY" $

@@ -53,6 +53,7 @@ The `<&` operator executes a log action on a message.
 | [Filtering](docs/examples/filtering.md) | Severity filtering with `filterBySeverity`, `cfilter`, `cmapMaybe` |
 | [Context](docs/examples/context.md) | Scoped structured context with `withContext` |
 | [Custom Loggable](docs/examples/custom-loggable.md) | Implementing `Loggable` for your types |
+| [Masking](docs/examples/masking.md) | Redacting sensitive fields with `Masked` and `Hidden` |
 | [Testing](docs/examples/testing.md) | In-memory `TestLog` for assertions |
 | [JSON Output](docs/examples/json-output.md) | JSON backend with `jsonLogStdout` |
 | [File Rotation](docs/examples/file-rotation.md) | Size-based rotation with `withRotatingLogFile` |

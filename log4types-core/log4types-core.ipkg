@@ -1,5 +1,5 @@
 package log4types-core
-version = 0.5.1
+version = 0.6.0
 authors = "Alexandr Chigrinets"
 license = "MIT"
 brief   = "Core algebra for composable logging, refined by dependent types"
@@ -12,6 +12,7 @@ sourcedir = "src"
 modules = Log4Types.Core
         , Log4Types.Core.Action
         , Log4Types.Core.Loggable
+        , Log4Types.Core.Masking
         , Log4Types.Core.TestLog
         , Log4Types.Core.Renderer
         , Log4Types.Core.Severity

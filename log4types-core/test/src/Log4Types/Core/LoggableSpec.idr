@@ -53,3 +53,10 @@ loggableSpec = describe "Loggable" $ do
       let lv = MkLoggedValue "test"
           fields = loggedValueFields testRenderer lv []
       in fields `mustEqual` [("value", StrVal "test")]
+
+  describe "addLoggableField" $ do
+    it "writes a scalar under the given name" $
+      addLoggableField testRenderer "count" 42 [] `mustEqual` [("count", IntVal 42)]
+
+    it "writes nothing for a value without fields" $
+      addLoggableField testRenderer "password" (MkHidden "hunter2") [] `mustEqual` []

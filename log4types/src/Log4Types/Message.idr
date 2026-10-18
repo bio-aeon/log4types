@@ -40,12 +40,17 @@ record Msg where
   text     : String
   fields   : List (String, LogParamValue)
 
+||| Render a Msg as a single line: the severity tag `fmtSev` produces, the
+||| text, then any fields as `key=value` pairs. `show` uses `fmtSeverity`.
+public export
+fmtMsgWith : (fmtSev : Severity -> String) -> Msg -> String
+fmtMsgWith fmtSev msg =
+  let line = fmtSev msg.severity ++ " " ++ msg.text
+  in if null msg.fields then line else line ++ " " ++ fmtFields msg.fields
+
 public export
 Show Msg where
-  show msg =
-    let base = fmtSeverity msg.severity ++ " " ++ msg.text
-        flds = concatMap (\(k, v) => " " ++ k ++ "=" ++ show v) msg.fields
-    in base ++ flds
+  show = fmtMsgWith fmtSeverity
 
 public export
 Loggable Msg where

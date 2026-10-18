@@ -46,3 +46,12 @@ jsonSpec = describe "JSON" $ do
 
     it "booleans remain boolean" $
       encodeLoggableStr True `mustEqual` "{\"value\":true}"
+
+  describe "masking" $ do
+    it "renders a Masked value as the string ***" $
+      addLoggableField jsonRenderer "email" (MkMasked "alice@example.com") (JObject [])
+        `mustEqual` JObject [("email", JString "***")]
+
+    it "leaves Hidden fields out of the object" $
+      let user = JObject [("name", JString "alice")]
+      in addLoggableField jsonRenderer "password" (MkHidden "hunter2") user `mustEqual` user

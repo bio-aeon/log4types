@@ -21,10 +21,17 @@ messageSpec = describe "Message" $ do
   describe "mkError" $ do
     it "sets severity to Error" (severity (mkError "hi") `mustEqual` Error)
 
-  describe "Msg with fields" $ do
-    it "show includes fields" $
-      let msg = MkMsg Info "request" [("status", IntVal 200)]
-      in show msg `mustEqual` "[INFO] request status=200"
+  describe "fmtMsgWith" $ do
+    it "renders the tag, the text and the fields on one line" $
+      fmtMsgWith show (MkMsg Warning "disk low" [("percent", IntVal 92)])
+        `mustEqual` "Warning disk low percent=92"
+
+    it "ends the line with the text when there are no fields" $
+      fmtMsgWith show (mkInfo "ready") `mustEqual` "Info ready"
+
+  describe "Msg" $ do
+    it "shows its severity as a bracketed tag" $
+      show (mkInfo "ready") `mustEqual` "[INFO] ready"
 
   describe "SimpleMsg" $ do
     it "show formats severity and text" $

@@ -104,3 +104,16 @@ public export
 Loggable LogParamValue where
   logFields renderer v acc = renderer.addField "value" v acc
   logShow = show
+
+----------------------------------------------------------------------
+-- Field composition
+----------------------------------------------------------------------
+
+||| Render a field-level value - a built-in scalar, `Masked`, `Hidden`, or a
+||| `Maybe` of those - as the field `name` of an enclosing record. A value
+||| whose instance writes nothing, such as `Hidden`, adds nothing. Nest a
+||| multi-field record with `addNested` instead.
+public export
+addLoggableField : Loggable a => LogRenderer r -> (name : String) -> a -> r -> r
+addLoggableField renderer name =
+  logFields ({ addField := \_ => renderer.addField name } renderer)

@@ -1,10 +1,11 @@
 ||| ANSI-coloured console output for log4types.
 |||
-||| Severity-coloured bracketed tags and a coloured text renderer for
+||| Severity-coloured bracketed tags and coloured `key=value` text for
 ||| development-time console logging. Colour codes are emitted only when
 ||| stdout is a terminal; redirected output stays plain.
 module Log4Types.ANSI
 
+import Data.String
 import System.File
 import public Control.ANSI
 import Log4Types.Core
@@ -33,37 +34,18 @@ public export
 fmtColouredSeverity : Severity -> String
 fmtColouredSeverity sev = show $ colored (severityColor sev) (fmtSeverity sev)
 
-||| A LogRenderer that produces key=value text with a coloured severity tag
-||| when the renderer encounters a "severity" field.
-|||
-||| Non-severity fields render exactly as `textRenderer` does.
+||| Render fields as `fmtFields` does, except a top-level "severity" field
+||| naming a severity level, which renders as its coloured bracketed tag.
 public export
-colouredTextRenderer : LogRenderer String
-colouredTextRenderer = MkLogRenderer
-  { addField  = \name, val, acc =>
-      let field = if name == "severity"
-                    then case val of
-                           StrVal s => colourize s
-                           _        => name ++ "=" ++ show val
-                    else name ++ "=" ++ show val
-      in if acc == "" then field else acc ++ " " ++ field
-  , addNested = \name, build, acc =>
-      let nested   = build ""
-          prefixed = name ++ "." ++ nested
-      in if acc == "" then prefixed else acc ++ " " ++ prefixed
-  , empty     = ""
-  , combine   = \a, b =>
-      if a == "" then b
-      else if b == "" then a
-      else a ++ " " ++ b
-  }
+fmtColouredFields : List (String, LogParamValue) -> String
+fmtColouredFields = unwords . map fmtColouredField
   where
-    colourize : String -> String
-    colourize "Debug"   = fmtColouredSeverity Debug
-    colourize "Info"    = fmtColouredSeverity Info
-    colourize "Warning" = fmtColouredSeverity Warning
-    colourize "Error"   = fmtColouredSeverity Error
-    colourize other     = "severity=\"" ++ other ++ "\""
+    fmtColouredField : (String, LogParamValue) -> String
+    fmtColouredField ("severity", StrVal "Debug")   = fmtColouredSeverity Debug
+    fmtColouredField ("severity", StrVal "Info")    = fmtColouredSeverity Info
+    fmtColouredField ("severity", StrVal "Warning") = fmtColouredSeverity Warning
+    fmtColouredField ("severity", StrVal "Error")   = fmtColouredSeverity Error
+    fmtColouredField field                          = fmtFields [field]
 
 ||| True when stdout is connected to a terminal.
 |||
@@ -77,18 +59,7 @@ stdoutIsTTY = isTTY stdout
 ||| and any structured fields as `key=value` pairs.
 public export
 fmtColouredMsg : Msg -> String
-fmtColouredMsg msg =
-  let sevPart = fmtColouredSeverity msg.severity
-      textPart = msg.text
-      fieldsPart = foldl addFieldStr "" msg.fields
-  in if fieldsPart == ""
-       then sevPart ++ " " ++ textPart
-       else sevPart ++ " " ++ textPart ++ " " ++ fieldsPart
-  where
-    addFieldStr : String -> (String, LogParamValue) -> String
-    addFieldStr acc (k, v) =
-      let part = k ++ "=" ++ show v
-      in if acc == "" then part else acc ++ " " ++ part
+fmtColouredMsg = fmtMsgWith fmtColouredSeverity
 
 ||| Pick a Msg formatter based on TTY availability.
 |||

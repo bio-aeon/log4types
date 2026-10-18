@@ -10,6 +10,33 @@ While pre-1.0, breaking changes may land in minor releases - they are marked
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-18
+
+Masking: `Masked` and `Hidden` fields keep sensitive values out of log
+output.
+
+### Added
+
+- Masking in `log4types-core`: `Masked` logs a value as `***`, `Hidden`
+  leaves it out, and `addMaskedField` logs part of a value through a policy
+  such as `lastN` or `emailDomainOnly`.
+- `addLoggableField` writes a scalar, `Masked` or `Hidden` value as a named
+  field.
+- `fieldsRenderer` flattens a value into a field list, and `fmtFields` /
+  `fmtColouredFields` render that list as plain or coloured `key=value` text.
+- `fmtMsgWith` renders a `Msg` with a custom severity tag.
+
+### Removed
+
+- **Breaking:** `textRenderer` and `colouredTextRenderer`, replaced by
+  `fieldsRenderer`: `logFields textRenderer x ""` becomes
+  `fmtFields (logFields fieldsRenderer x [])`.
+
+### Fixed
+
+- Text output prefixes every field of a nested object, at any depth
+  (`customer.address.city`), not just the first.
+
 ## [0.5.1] - 2026-10-12
 
 No library changes: the test suites now run on evince 0.9.

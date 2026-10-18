@@ -37,7 +37,7 @@ interface Loggable a where
   logShow   : a -> String                   -- human-readable display
 ```
 
-`logFields` is backend-agnostic - the same implementation works with the text renderer, JSON renderer, or any custom `LogRenderer`.
+`logFields` is backend-agnostic - the same implementation works with `fieldsRenderer` (text output), `jsonRenderer`, or any custom `LogRenderer`.
 
 `logShow` provides a human-readable representation for log messages.
 

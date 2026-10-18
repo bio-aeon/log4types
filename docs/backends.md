@@ -34,9 +34,6 @@ codegen = "node"
   as `{"count":99.0}` on chez but `{"count":99}` on node. Both parse to the
   same value; do not string-match numeric log output across backends.
 - `refc`: the C-family `%foreign` declarations (including `rename` from
-  libc) are native here. A known upstream idris2 bug miscompiles casts from
-  `String` on refc; `JSON.parse` triggers it, so the log4types-json test
-  suite is skipped on the refc CI leg. The library's encoding path is
-  unaffected.
+  libc) are native here.
 - `racket`: consumes the same C support library as chez; log4types uses no
   concurrency primitives.
